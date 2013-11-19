@@ -12,7 +12,9 @@ class DockingStation
   end
 
   def dock(bike)
-    @bikes << bike
+    if !limit_reached?
+      @bikes << bike
+    end
   end
 
   def release(bike)
@@ -23,6 +25,10 @@ class DockingStation
     if bike_count >= 15 && @station_limit >= 15
       true
     end 
+  end
+
+  def available_bikes
+    @bikes.reject {|bike| bike.broken?}
   end
 
 end
